@@ -29,6 +29,8 @@ Sandwich Toppings: Genoa Salami, Capocollo,Provolone, Hot Peppers, onion, lettuc
 Sandwich Name: Spicy East Coast Italian
 Sandwich Toppings: Turkey, Provolone, Avocado, cucumber, lettuce, tomato & mayo
 Sandwich Name: Beach Club
+Sandwich Toppings: a biscuit, a piece of fried chicken, and some sausage gravy
+Sandwich Name: The East Nasty
 Sandwich Toppings: {}
 Sandwich Name:""".format(
         sandwich_toppings.capitalize()
