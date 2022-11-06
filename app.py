@@ -6,12 +6,11 @@ from flask import Flask, redirect, render_template, request, url_for
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-
 @app.route("/", methods=("GET", "POST"))
 def index():
     if request.method == "POST":
         sandwich_toppings = request.form.get("sandwich_toppings")
-        temp = request.form.get("temp")
+        temp = float(request.form.get("creativity"))
         print(temp)
         response = openai.Completion.create(
             model="text-davinci-002",
@@ -22,6 +21,23 @@ def index():
 
     result = request.args.get("result")
     return render_template("index.html", result=result)
+
+@app.route("/car_name", methods=("GET", "POST"))
+def car_namer():
+    if request.method == "POST":
+        sandwich_toppings = request.form.get("sandwich_toppings")
+        temp = float(request.form.get("creativity"))
+        print(temp)
+        response = openai.Completion.create(
+            model="text-davinci-002",
+            prompt=generate_prompt(sandwich_toppings),
+            temperature=temp,
+        )
+        return redirect(url_for("car_namer", result=response.choices[0].text))
+
+    result = request.args.get("result")
+    return render_template("car_name.html", result=result)
+
 
 
 def generate_prompt(sandwich_toppings):
