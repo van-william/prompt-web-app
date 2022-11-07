@@ -14,7 +14,6 @@ def index():
     if request.method == "POST":
         sandwich_toppings = request.form.get("sandwich_toppings")
         temp = float(request.form.get("creativity"))
-        print(temp)
         response = openai.Completion.create(
             model="text-davinci-002",
             prompt=sandwich_prompt(sandwich_toppings),
@@ -31,7 +30,6 @@ def book_prompts():
     if request.method == "POST":
         book_topics = request.form.get("book_topics")
         temp = float(request.form.get("creativity"))
-        print(temp)
         response = openai.Completion.create(
             model="text-davinci-002",
             prompt=book_prompt(book_topics),
