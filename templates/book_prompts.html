@@ -4,14 +4,15 @@
 {% block content %}
 
 <body>
-  <img src="{{ url_for('static', filename='sandwich_cropped.png') }}" class="icon" />
-  <h3>Name my Car</h3>
-  <form action="/car_name" method="post">
-    <input type="text" name="sandwich_toppings" placeholder="Enter Sandwich Toppings" required />
+  <img src="{{ url_for('static', filename='Robot Coffee.png') }}" class="image" />
+  <br>
+  <h3>Book Picker!</h3>
+  <form action="/book_prompts" method="post">
+    <input type="text" name="book_topics" placeholder="Enter Reading Topics" required />
     <label for="creativity">Creativity:</label>
     <input type="range" name = "creativity" id = "creativity" placeholder="Creativity" min="0" max="1" step = "0.1" value="0.7" name="temp" oninput="this.nextElementSibling.value = this.value" />
     <output>0.7</output>
-    <input type="submit" value="Generate names" />
+    <input type="submit" value="Generate books" />
   </form>
   {% if result %}
   <div class="result">{{ result }}</div>

@@ -1,7 +1,10 @@
 import os
 
 import openai
+
 from flask import Flask, redirect, render_template, request, url_for
+
+from openai_prompts.GPT3_prompts import sandwich_prompt,book_prompt
 
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -14,7 +17,7 @@ def index():
         print(temp)
         response = openai.Completion.create(
             model="text-davinci-002",
-            prompt=generate_prompt(sandwich_toppings),
+            prompt=sandwich_prompt(sandwich_toppings),
             temperature=temp,
         )
         return redirect(url_for("index", result=response.choices[0].text))
@@ -22,34 +25,34 @@ def index():
     result = request.args.get("result")
     return render_template("index.html", result=result)
 
-@app.route("/car_name", methods=("GET", "POST"))
-def car_namer():
+@app.route("/book_prompts", methods=("GET", "POST"))
+def book_prompts():
+    
     if request.method == "POST":
-        sandwich_toppings = request.form.get("sandwich_toppings")
+        book_topics = request.form.get("book_topics")
         temp = float(request.form.get("creativity"))
         print(temp)
         response = openai.Completion.create(
             model="text-davinci-002",
-            prompt=generate_prompt(sandwich_toppings),
+            prompt=book_prompt(book_topics),
             temperature=temp,
         )
-        return redirect(url_for("car_namer", result=response.choices[0].text))
+        return render_template("book_prompts.html", result=response.choices[0].text)
 
-    result = request.args.get("result")
-    return render_template("car_name.html", result=result)
-
+    return render_template("book_prompts.html")
 
 
-def generate_prompt(sandwich_toppings):
-    return """Suggest three names for a custom sandwich order.
+@app.route("/image_maker", methods=("GET", "POST"))
+def image_maker():
+    if request.method == "POST":
+        form_prompt = request.form.get("image_prompt")
+        response = openai.Image.create(
+            prompt=form_prompt,
+            n=1,
+            size="512x512",
+        )
+        return redirect(url_for("image_maker", image_url = response['data'][0]['url']))
 
-Sandwich Toppings: Genoa Salami, Capocollo,Provolone, Hot Peppers, onion, lettuce, tomato & easy mayo
-Sandwich Name: Spicy East Coast Italian
-Sandwich Toppings: Turkey, Provolone, Avocado, cucumber, lettuce, tomato & mayo
-Sandwich Name: Beach Club
-Sandwich Toppings: a biscuit, a piece of fried chicken, and some sausage gravy
-Sandwich Name: The East Nasty
-Sandwich Toppings: {}
-Sandwich Name:""".format(
-        sandwich_toppings.capitalize()
-    )
+    image_url = request.args.get("image_url")
+    return render_template("image_maker.html", image_url=image_url)
+

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html >
+{% extends 'base.html' %}
+{% block content %}
+
+<body>
+  <img src="{{ url_for('static', filename='Robot Coffee.png') }}" class="image" />
+  <h3>Image Generator</h3>
+  <form action="/image_maker" method="post">
+    <input type="text" name="image_prompt" placeholder="Enter Image Prompt" required />
+    <input type="submit" value="Generate Image" />
+  </form>
+
+  <br>
+  <br>
+  {% if image_url %}
+  <div>
+    <img src="{{ image_url }}" alt="DALL-E Output">
+  </div>
+  {% endif %}
+
+</body>
+{% endblock %}
+</html>
