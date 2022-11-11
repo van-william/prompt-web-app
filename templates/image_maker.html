@@ -8,9 +8,6 @@
   <h3>Image Generator</h3>
   <form action="/image_maker" method="post">
     <input type="text" name="image_prompt" placeholder="Enter Image Prompt" required />
-    <label for="creativity">Creativity:</label>
-    <input type="range" name = "creativity" id = "creativity" placeholder="Creativity" min="0" max="1" step = "0.1" value="0.7" name="temp" oninput="this.nextElementSibling.value = this.value" />
-    <output>0.7</output>
     <input type="submit" value="Generate Image" />
   </form>
 
