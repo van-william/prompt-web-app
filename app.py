@@ -19,10 +19,9 @@ def index():
             prompt=sandwich_prompt(sandwich_toppings),
             temperature=temp,
         )
-        return redirect(url_for("index", result=response.choices[0].text))
+        return render_template("index.html", result=response.choices[0].text)
 
-    result = request.args.get("result")
-    return render_template("index.html", result=result)
+    return render_template("index.html")
 
 @app.route("/book_prompts", methods=("GET", "POST"))
 def book_prompts():
