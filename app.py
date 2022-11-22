@@ -1,9 +1,6 @@
 import os
 from flask import Flask, redirect, render_template, request, url_for
 
-from transformers import pipeline, set_seed
-generator = pipeline('text-generation', model='gpt2')
-
 from openai_prompts.GPT3_prompts import sandwich_prompt,book_prompt
 import openai
 openai.api_key = os.getenv("OPENAI_API_KEY")
