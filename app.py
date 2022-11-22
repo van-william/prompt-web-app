@@ -1,13 +1,15 @@
 import os
-
-import openai
-
 from flask import Flask, redirect, render_template, request, url_for
 
+from transformers import pipeline, set_seed
+generator = pipeline('text-generation', model='gpt2')
+
 from openai_prompts.GPT3_prompts import sandwich_prompt,book_prompt
+import openai
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = Flask(__name__)
-openai.api_key = os.getenv("OPENAI_API_KEY")
+
 
 @app.route("/", methods=("GET", "POST"))
 def index():
@@ -52,4 +54,21 @@ def image_maker():
 
     image_url = request.args.get("image_url")
     return render_template("image_maker.html", image_url=image_url)
+
+@app.route("/qna_maker", methods=("GET", "POST"))
+def qna_maker():        
+    if request.method == "POST":
+        question = request.form.get("question")
+        temp = float(request.form.get("creativity"))
+        response = openai.Completion.create(
+            model="text-davinci-002",
+            prompt=question,
+            temperature=temp,
+        )
+        return render_template("qna_prompt.html", result=response.choices[0].text)
+
+    return render_template("qna_prompt.html")
+
+
+
 

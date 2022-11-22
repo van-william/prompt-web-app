@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html >
+{% extends 'base.html' %}
+{% block content %}
+
+<body>
+  <img src="{{ url_for('static', filename='Robot Coffee.png') }}" class="image" />
+  <h3>Question Responder!</h3>
+    <form action="/qna_maker" method="post">
+    <input type="text" name="question" placeholder="Enter Question" required />
+    <label for="creativity">Creativity:</label>
+    <input type="range" name = "creativity" id = "creativity" placeholder="Creativity" min="0" max="1" step = "0.1" value="0.7" name="temp" oninput="this.nextElementSibling.value = this.value" />
+    <output>0.7</output>
+    <input type="submit" value="Generate Response" />
+  </form>
+
+  <br>
+  <br>
+  {% if result %}
+  <div class="result">{{ result }}</div>
+  {% endif %}
+
+</body>
+{% endblock %}
+</html>
